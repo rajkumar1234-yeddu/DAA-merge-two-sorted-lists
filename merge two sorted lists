@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+struct node{
+    int val;
+    struct node *next;
+}*new, *list1 = NULL, *list2 = NULL, *list3 = NULL;
+
+struct node* mergeTwoLists(struct node* list1, struct node* list2){
+    struct node* head = NULL;
+    struct node* tail = NULL;
+    while (list1!=NULL && list2!=NULL){
+        new=(struct node*)malloc(sizeof(struct node));
+        if (list1->val < list2->val){
+            new->val = list1->val;
+            new->next = NULL;
+            if (head == NULL){
+                head=new;
+                tail=new;
+            }
+            else{
+                tail->next=new;
+                tail=tail->next;
+            }
+            list1=list1->next;
+        }
+        else{
+            new->val = list2->val;
+            new->next = NULL;
+            if (head == NULL){
+                head=new;
+                tail=new;
+            }
+            else{
+                tail->next=new;
+                tail=tail->next;
+            }
+            list2=list2->next;
+        }
+    }
+    while (list1!=NULL){
+        new=(struct node*)malloc(sizeof(struct node));
+        new->val = list1->val;
+        new->next = NULL;
+        if (head != NULL){
+            tail->next=new;
+            tail=tail->next;
+            list1=list1->next;
+        }
+        else{
+            head=new;
+            tail=new;
+            list1=list1->next;
+        }
+    }
+    while (list2!=NULL){
+        new=(struct node*)malloc(sizeof(struct node));
+        new->val = list2->val;
+        new->next = NULL;
+        if (head != NULL){
+            tail->next=new;
+            tail=tail->next;
+            list2=list2->next;
+        }
+        else{
+            head=new;
+            tail=new;
+            list2=list2->next;
+        }
+    }
+    return head;
+}
+
+struct node* insert(){
+    struct node* h = NULL;
+    struct node* t = NULL;
+    int n, v, i;
+    printf("Enter no of values in list : ");
+    scanf("%d", &n);
+    printf("Enter values in sorted order\n");
+    for(i=0; i<n; i++){
+        new=(struct node*)malloc(sizeof(struct node));
+        printf("Enter %d th value : ",i+1);
+        scanf("%d",&v);
+        new->val = v;
+        new->next=NULL;
+        if(i==0){
+            h=new;
+            t=new;
+        }
+        else{
+            t->next=new;
+            t=t->next;
+        }
+    }
+    return h;
+}
+
+int main(){
+    printf("Enter values in list 1\n");
+    list1 = insert();
+    printf("Enter values in list 2\n");
+    list2 = insert();
+    list3 = mergeTwoLists(list1,list2);
+    printf("Final list is: \n");
+    while (list3 != NULL){
+        printf("%d\t",list3->val);
+        list3=list3->next;
+    }
+}
+
+
